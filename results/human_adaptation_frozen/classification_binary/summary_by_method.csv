@@ -1,0 +1,9 @@
+method,method_display_name,n_runs,folds_available,cat_seeds_available,mean_balanced_accuracy,std_balanced_accuracy,mean_macro_f1,std_macro_f1,mean_loss,std_loss
+imagenet,ImageNet,0,,,nan,nan,nan,nan,nan,nan
+full_human_mae,Full Human MAE,0,,,nan,nan,nan,nan,nan,nan
+human_mae_last2,Human MAE Last2,0,,,nan,nan,nan,nan,nan,nan
+human_mae_last4,Human MAE Last4,0,,,nan,nan,nan,nan,nan,nan
+human_mae_last6,Human MAE Last6,0,,,nan,nan,nan,nan,nan,nan
+human_mae_alpha_0p1,Human MAE alpha=0.1,0,,,nan,nan,nan,nan,nan,nan
+human_mae_pretrained_anchor_allblocks,Human MAE + Pretrained Feature Anchor,0,,,nan,nan,nan,nan,nan,nan
+human_mae_cat_aware_preservation,Human MAE + Cat-aware Preservation,0,,,nan,nan,nan,nan,nan,nan

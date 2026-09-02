@@ -1,0 +1,9 @@
+method,adaptation_category,n_runs,dice_mean,dice_std,delta_vs_imagenet_mean,positive_pairs,total_pairs
+ImageNet,baseline,3,0.8799181550097868,0.0034899076308373494,nan,0,0
+Full Human MAE,full_adaptation,3,0.8657923409989013,0.0027042526555138974,-0.014125814010885493,0,3
+Human MAE Last2,constrained_depth,3,0.8820281577469251,0.0013428450910669685,0.002110002737138276,2,3
+Human MAE Last4,constrained_depth,1,0.8809563823461746,0.0,0.0006431093125129905,1,1
+Human MAE Last6,constrained_depth,1,0.8866607188537896,0.0,0.006347445820128028,1,1
+Human MAE alpha=0.1,task_vector,3,0.8806256944885058,0.003141735868664069,0.0007075394787190437,3,3
+Human MAE + Pretrained Feature Anchor,feature_preservation,1,0.8807802731615415,0.0,0.00046700012787992407,1,1
+Human MAE + Cat-aware Preservation,cat_aware_preservation,1,0.8824077431414387,0.0,0.00209447010777708,1,1

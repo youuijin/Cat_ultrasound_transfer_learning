@@ -1,0 +1,1 @@
+task,method,method_display_name,fold,cat_seed,human_ssl_seed,transfer,best_epoch,balanced_accuracy,macro_f1,accuracy,loss,encoder_checkpoint,run_path,result_file

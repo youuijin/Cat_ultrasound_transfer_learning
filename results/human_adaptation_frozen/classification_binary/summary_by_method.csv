@@ -1,5 +1,5 @@
 method,method_display_name,n_runs,folds_available,cat_seeds_available,mean_balanced_accuracy,std_balanced_accuracy,mean_macro_f1,std_macro_f1,mean_loss,std_loss
-imagenet,ImageNet,0,,,nan,nan,nan,nan,nan,nan
+imagenet,ImageNet,1,0,0,0.42045454545454547,0.0,0.39912917271407844,0.0,0.7451910506124082,0.0
 full_human_mae,Full Human MAE,0,,,nan,nan,nan,nan,nan,nan
 human_mae_last2,Human MAE Last2,0,,,nan,nan,nan,nan,nan,nan
 human_mae_last4,Human MAE Last4,0,,,nan,nan,nan,nan,nan,nan

@@ -24,11 +24,11 @@ checkpoint_for() {
 }
 
 run_binary() {
-  "$PYTHON" scripts/run_human_adaptation_frozen_task.py --task classification_binary
+  "$PYTHON" scripts/run_human_adaptation_frozen_task.py --task classification_binary "$@"
 }
 
 run_detection() {
-  "$PYTHON" scripts/run_human_adaptation_frozen_task.py --task detection
+  "$PYTHON" scripts/run_human_adaptation_frozen_task.py --task detection "$@"
 }
 
 usage() {
@@ -45,9 +45,9 @@ Commands:
   aggregate-detection
       Collects frozen detection validation metrics into task-level CSV files.
   classification-binary
-      Runs the eight seed-0 frozen binary-classification methods (balanced_softmax).
+      Runs only missing frozen binary-classification methods; accepts --folds, --seeds, --methods, --dry-run.
   detection
-      Runs the eight seed-0 frozen detection methods.
+      Runs only missing frozen detection methods; accepts --folds, --seeds, --methods, --dry-run.
 
 All segmentation repeated runs are stored as:
   runs/cat_frozen_screening/<method>/fold<FOLD>/seed<CAT_SEED>/
@@ -62,8 +62,8 @@ case "${1:-help}" in
   aggregate-segmentation) "$PYTHON" scripts/aggregate_human_adaptation_frozen.py ;;
   aggregate-classification) "$PYTHON" scripts/aggregate_human_adaptation_frozen_downstream.py --task classification_binary ;;
   aggregate-detection) "$PYTHON" scripts/aggregate_human_adaptation_frozen_downstream.py --task detection ;;
-  classification-binary) run_binary ;;
-  detection) run_detection ;;
+  classification-binary) shift; run_binary "$@" ;;
+  detection) shift; run_detection "$@" ;;
   help|-h|--help) usage ;;
   *) echo "Unknown command: $1" >&2; usage; exit 2 ;;
 esac

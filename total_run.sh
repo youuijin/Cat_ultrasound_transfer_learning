@@ -24,30 +24,11 @@ checkpoint_for() {
 }
 
 run_binary() {
-  for method in "${METHODS[@]}"; do
-    checkpoint="$(checkpoint_for "$method")"
-    args=(-m src.classification.train --task classification --encoder vit_b16
-      --encoder-init "$([[ -n "$checkpoint" ]] && echo human_mae || echo imagenet)"
-      --transfer frozen --classification-mode binary --condition balanced_softmax
-      --data-root data/cat_dataset --num-folds 5 --fold 0 --split-seed 42 --seed 0
-      --batch-size 32 --epochs 50 --lr 1e-4 --weight-decay 1e-4 --num-workers 4 --amp
-      --output-dir "runs/human_adaptation_frozen/classification_binary/$method")
-    [[ -n "$checkpoint" ]] && args+=(--encoder-checkpoint "$checkpoint")
-    "$PYTHON" "${args[@]}"
-  done
+  "$PYTHON" scripts/run_human_adaptation_frozen_task.py --task classification_binary
 }
 
 run_detection() {
-  for method in "${METHODS[@]}"; do
-    checkpoint="$(checkpoint_for "$method")"
-    args=(-m src.detection.train --task detection --encoder vit_b16
-      --encoder-init "$([[ -n "$checkpoint" ]] && echo human_mae || echo imagenet)"
-      --transfer frozen --data-root data/cat_dataset --num-folds 5 --fold 0 --split-seed 42 --seed 0
-      --batch-size 32 --epochs 50 --lr 1e-4 --weight-decay 1e-4 --num-workers 4 --amp
-      --output-dir "runs/human_adaptation_frozen/detection/$method")
-    [[ -n "$checkpoint" ]] && args+=(--encoder-checkpoint "$checkpoint")
-    "$PYTHON" "${args[@]}"
-  done
+  "$PYTHON" scripts/run_human_adaptation_frozen_task.py --task detection
 }
 
 usage() {

@@ -11,6 +11,7 @@ import torch
 from PIL import Image, ImageDraw
 from torch.utils.tensorboard import SummaryWriter
 
+from src.checkpoint_utils import portable_config
 from src.classification.training_utils import set_seed
 from src.encoders import get_encoder
 from src.human_ssl.data import (
@@ -200,7 +201,7 @@ def _args_config(args) -> dict:
     values = vars(args).copy()
     if values.get("save_encoder_epochs") is None:
         values.pop("save_encoder_epochs", None)
-    return values
+    return portable_config(values)
 
 
 def _save_encoder(path: Path, model: VisionMAE, args, epoch: int, val_loss: float,

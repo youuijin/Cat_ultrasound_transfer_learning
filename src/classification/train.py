@@ -262,7 +262,7 @@ def main() -> None:
                                   lr=args.lr, weight_decay=args.weight_decay)
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=args.epochs)
     amp_enabled = args.amp and device.type == "cuda"
-    scaler = torch.amp.GradScaler(device.type, enabled=amp_enabled)
+    scaler = torch.cuda.amp.GradScaler(enabled=amp_enabled)
     writer = SummaryWriter(run_dir / "tensorboard")
     writer.add_text("run/config", json.dumps(config, indent=2, ensure_ascii=False), 0)
     for name, value in counts.items():

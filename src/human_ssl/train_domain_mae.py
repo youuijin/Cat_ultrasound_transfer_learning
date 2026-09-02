@@ -8,6 +8,7 @@ from pathlib import Path
 import torch
 from torch.utils.tensorboard import SummaryWriter
 
+from src.checkpoint_utils import portable_config
 from src.classification.training_utils import set_seed
 from src.human_ssl.cat_anchor import build_cat_anchor_loader, write_subject_csv
 from src.human_ssl.data import build_ssl_loaders, dataset_counts, discover_ssl_samples, split_ssl_samples
@@ -67,7 +68,7 @@ def evaluate(model,teacher,loader,device,amp,mask_ratio):
 def save(path,model,args,epoch,val_loss):
     torch.save({"format":"feline_transfer_learning.vision_encoder.v1","encoder_name":"vit_b16_imagenet","initialization":model.encoder.pretraining,
                 "adaptation":"human_kidney_ultrasound_mae","ssl_domains":args.ssl_domains,"epoch":epoch,
-                "validation_reconstruction_loss":val_loss,"state_dict":model.encoder.state_dict(),"model_state_dict":model.encoder.model.state_dict(),"config":vars(args)},path)
+                "validation_reconstruction_loss":val_loss,"state_dict":model.encoder.state_dict(),"model_state_dict":model.encoder.model.state_dict(),"config":portable_config(vars(args))},path)
 
 
 def main():

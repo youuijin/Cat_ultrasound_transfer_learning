@@ -9,6 +9,8 @@ import torch
 from torch import Tensor, nn
 from torch.utils.data import DataLoader
 
+from src.checkpoint_utils import portable_config
+
 
 def set_seed(seed: int) -> None:
     random.seed(seed); np.random.seed(seed); torch.manual_seed(seed); torch.cuda.manual_seed_all(seed)
@@ -119,4 +121,4 @@ def save_checkpoint(path: Path, model: nn.Module, optimizer, scheduler, epoch: i
     torch.save({"epoch": epoch, "state_dict": model.state_dict(),
                 "optimizer_state_dict": optimizer.state_dict(),
                 "scheduler_state_dict": scheduler.state_dict(), "best_score": best_score,
-                "args": vars(args)}, path)
+                "args": portable_config(vars(args))}, path)

@@ -6,6 +6,7 @@ import torch
 from torch import Tensor, nn
 
 from src.adapter import apply_adapters
+from src.checkpoint_utils import load_torch_checkpoint
 from src.encoders import VisionEncoder, get_encoder
 from src.lora import apply_qv_lora
 
@@ -57,7 +58,7 @@ def build_encoder(name: str, transfer: str, partial_blocks: int,
         path = Path(encoder_checkpoint).expanduser().resolve()
         if not path.is_file():
             raise FileNotFoundError(f"Human SSL encoder checkpoint not found: {path}")
-        payload = torch.load(path, map_location="cpu", weights_only=False)
+        payload = load_torch_checkpoint(path, map_location="cpu", weights_only=False)
         if not isinstance(payload, dict) or "state_dict" not in payload:
             raise ValueError("Human SSL checkpoint must contain an encoder-only 'state_dict'.")
         compatible_encoder_names = {encoder_name}

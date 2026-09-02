@@ -6,6 +6,7 @@ from pathlib import Path
 import torch
 from torch import nn
 from torch.utils.tensorboard import SummaryWriter
+from src.checkpoint_utils import portable_config
 from src.classification.training_utils import set_seed
 from src.human_ssl.data import DEFAULT_ROOTS,build_barlow_loaders,dataset_counts,discover_ssl_samples,split_ssl_samples
 from src.human_ssl.mae import VisionMAE
@@ -43,7 +44,7 @@ def epoch(encoder,projector,loader,device,scaler,amp,weight,teacher=None,anchor_
    for k,v in vals.items():tot[k]+=float(v)*n
    count+=n
  return {k:v/max(count,1) for k,v in tot.items()}
-def save(path,encoder,args,epoch,val):torch.save({"format":"feline_transfer_learning.vision_encoder.v1","encoder_name":"vit_b16_imagenet","initialization":"ImageNet-1K supervised","adaptation":"human_kidney_ultrasound_barlow","epoch":epoch,"validation_barlow_loss":val,"state_dict":encoder.state_dict(),"config":vars(args)},path)
+def save(path,encoder,args,epoch,val):torch.save({"format":"feline_transfer_learning.vision_encoder.v1","encoder_name":"vit_b16_imagenet","initialization":"ImageNet-1K supervised","adaptation":"human_kidney_ultrasound_barlow","epoch":epoch,"validation_barlow_loss":val,"state_dict":encoder.state_dict(),"config":portable_config(vars(args))},path)
 def main():
  a=parse();set_seed(a.seed);a.output_dir.mkdir(parents=True,exist_ok=True);samples=discover_ssl_samples({n:getattr(a,f"{n}_root") for n in ("human1","human2","human3")});train,val=split_ssl_samples(samples,a.val_fraction,a.seed);mae=VisionMAE("vit_b16",256,4,8,False);encoder=mae.encoder;teacher=deepcopy(encoder) if a.feature_anchor_lambda>0 else None
  if teacher is not None:
